@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HuánucoFest | Conecta, Organiza, Confía</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN COMPLETA -->
+    <header class="navbar">
+        <div class="logo-container">
+            <!-- Icono de calendario y logo -->
+            <h2 class="logo-text">📅 Huánuco<span>Fest</span></h2>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#como-funciona">¿Cómo Funciona?</a></li>
+                <li><a href="#categorias">Categorías</a></li>
+                <li><a href="#confianza">Seguridad</a></li>
+            </ul>
+        </nav>
+        <div class="nav-buttons">
+            <button type="button" id="openProviderBtn" class="btn-outline">Soy Proveedor</button>
+            <button type="button" id="openQuoteBtn" class="btn-primary">Empezar a Cotizar</button>
+        </div>
+    </header>
+
+    <!-- SECCIÓN HERO CON BÚSQUEDA -->
+    <section id="inicio" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Tu evento perfecto, sin el estrés de siempre.</h1>
+            <p>El primer marketplace de Huánuco, Amarilis y Pillco Marca. Conecta con proveedores verificados y asegura tu dinero con nuestro sistema escrow.</p>
+            
+            <!-- Barra de búsqueda rápida -->
+            <div class="search-bar">
+                <input id="searchInput" type="text" placeholder="¿Qué necesitas? (Ej. DJ, Catering, Local...)">
+                <button id="searchButton" class="btn-search">Buscar</button>
+            </div>
+
+            <div id="searchResults" class="search-results" hidden>
+                <h3>Resultados de búsqueda</h3>
+                <p id="searchSummary" class="search-summary"></p>
+                <div id="searchList" class="search-list"></div>
+            </div>
+
+            <div id="quotePanel" class="quote-panel" hidden>
+                <h3>Solicita tu cotización rápida</h3>
+                <form id="quoteForm">
+                    <div class="quote-grid">
+                        <div class="quote-field">
+                            <label for="eventType">Tipo de evento</label>
+                            <select id="eventType" name="eventType">
+                                <option>Boda</option>
+                                <option>Cumpleaños</option>
+                                <option>Empresarial</option>
+                                <option>Graduación</option>
+                                <option>Otro</option>
+                            </select>
+                        </div>
+                        <div class="quote-field">
+                            <label for="guests">Número de personas</label>
+                            <input type="number" id="guests" name="guests" min="1" placeholder="Ej. 80">
+                        </div>
+                        <div class="quote-field">
+                            <label for="date">Fecha del evento</label>
+                            <input type="date" id="date" name="date">
+                        </div>
+                        <div class="quote-field">
+                            <label for="budget">Presupuesto estimado</label>
+                            <input type="text" id="budget" name="budget" placeholder="Ej. S/ 3000">
+                        </div>
+                    </div>
+
+                    <div class="quote-field quote-services">
+                        <label>Servicios que necesitas</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="services" value="Catering"> Catering</label>
+                            <label><input type="checkbox" name="services" value="Música"> Música</label>
+                            <label><input type="checkbox" name="services" value="Decoración"> Decoración</label>
+                            <label><input type="checkbox" name="services" value="Local"> Local</label>
+                        </div>
+                    </div>
+
+                    <div class="quote-field">
+                        <label for="details">Detalles adicionales</label>
+                        <textarea id="details" name="details" rows="3" placeholder="Cuéntanos brevemente lo que necesitas..."></textarea>
+                    </div>
+
+                    <div class="quote-actions">
+                        <button type="submit" class="btn-search">Enviar cotización</button>
+                        <p id="quoteMessage" class="quote-message"></p>
+                    </div>
+                </form>
+            </div>
+
+            <div id="providerPanel" class="provider-panel" hidden>
+                <h3>Solicitud para ser proveedor</h3>
+                <form id="providerForm">
+                    <div class="quote-grid">
+                        <div class="quote-field">
+                            <label for="companyName">Nombre de la empresa</label>
+                            <input type="text" id="companyName" name="companyName" placeholder="Ej. FestPro Eventos" required>
+                        </div>
+                        <div class="quote-field">
+                            <label for="companyRuc">RUC</label>
+                            <input type="text" id="companyRuc" name="companyRuc" placeholder="Ej. 20512345678" required>
+                        </div>
+                        <div class="quote-field">
+                            <label for="companyEmail">Correo electrónico</label>
+                            <input type="email" id="companyEmail" name="companyEmail" placeholder="Ej. contacto@miempresa.com" required>
+                        </div>
+                        <div class="quote-field">
+                            <label for="companyPhone">Teléfono / WhatsApp</label>
+                            <input type="tel" id="companyPhone" name="companyPhone" placeholder="Ej. 999123456" required>
+                        </div>
+                    </div>
+                    <div class="quote-field">
+                        <label for="companyCategory">Rubro</label>
+                        <select id="companyCategory" name="companyCategory">
+                            <option value="Catering">Catering</option>
+                            <option value="Bandas">Bandas</option>
+                            <option value="DJ">DJ</option>
+                            <option value="Locales">Locales</option>
+                            <option value="Decoración">Decoración</option>
+                            <option value="Fotografía">Fotografía</option>
+                        </select>
+                    </div>
+                    <div class="quote-field">
+                        <label for="companyServices">¿A qué se dedica?</label>
+                        <textarea id="companyServices" name="companyServices" rows="3" placeholder="Ej. Arreglo floral, sonido profesional, fotógrafos, etc." required></textarea>
+                    </div>
+                    <div class="quote-actions">
+                        <button type="submit" class="btn-search">Enviar solicitud</button>
+                        <p id="providerMessage" class="quote-message"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN CÓMO FUNCIONA (LOS 3 PASOS DEL BOCETO) -->
+    <section id="como-funciona" class="steps-section">
+        <h2>Organizar nunca fue tan fácil</h2>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Busca y Compara</h3>
+                <p>Explora perfiles verificados con DNI/RUC y lee reseñas reales.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Cotiza Rápido</h3>
+                <p>Contacta directamente por la plataforma y acuerda los detalles.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Reserva Seguro</h3>
+                <p>Paga con Yape, Plin o tarjeta. El dinero se libera al proveedor solo cuando confirma el servicio.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE CATEGORÍAS (CATÁLOGO EXPANDIDO) -->
+    <section id="categorias" class="categories-section">
+        <h2>Explora nuestras categorías</h2>
+        <div class="grid-container">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80" alt="Servicio de Catering">
+                <h3>Catering</h3>
+                <p>Bocaditos, almuerzos y cenas para tu evento.</p>
+                <button type="button" class="link-card provider-btn" data-category="Catering">Ver Proveedores &rarr;</button>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=800&q=80" alt="Bandas en Vivo">
+                <h3>Bandas</h3>
+                <p>Agrupaciones musicales para todo tipo de fiestas.</p>
+                <button type="button" class="link-card provider-btn" data-category="Bandas">Ver Proveedores &rarr;</button>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80" alt="DJ profesional">
+                <h3>DJ</h3>
+                <p>DJ y sonido con luces para animar tu evento.</p>
+                <button type="button" class="link-card provider-btn" data-category="DJ">Ver Proveedores &rarr;</button>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80" alt="Locales de evento">
+                <h3>Locales</h3>
+                <p>Salones y espacios listos para tu celebración.</p>
+                <button type="button" class="link-card provider-btn" data-category="Locales">Ver Proveedores &rarr;</button>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" alt="Decoración">
+                <h3>Decoración</h3>
+                <p>Decoración creativa para todo tipo de evento.</p>
+                <button type="button" class="link-card provider-btn" data-category="Decoración">Ver Proveedores &rarr;</button>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80" alt="Fotografía y Video">
+                <h3>Fotografía y Video</h3>
+                <p>Captura los mejores momentos con profesionales.</p>
+                <button type="button" class="link-card provider-btn" data-category="Fotografía">Ver Proveedores &rarr;</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="providerResults" class="provider-results-section" hidden>
+        <h2 id="providerResultsTitle">Proveedores disponibles</h2>
+        <div id="providerList" class="provider-list"></div>
+    </section>
+
+    <!-- SECCIÓN DE TESTIMONIOS (PRUEBA SOCIAL) -->
+    <section class="testimonials">
+        <h2>Lo que dicen nuestros usuarios</h2>
+        <div class="testimo-grid">
+            <div class="testimo-card">
+                <p class="stars">⭐⭐⭐⭐⭐</p>
+                <p>"Contratamos a la Banda Los Caballeros de Tomayquichua para nuestro evento de facultad y fue increíble. Pagar por la plataforma nos dio mucha tranquilidad."</p>
+                <h4>- Comité Organizador, UDH</h4>
+            </div>
+            <div class="testimo-card">
+                <p class="stars">⭐⭐⭐⭐⭐</p>
+                <p>"Antes me daba miedo que el catering no llegara. Con el pago retenido de HuánucoFest, el proveedor cumplió puntual y con calidad."</p>
+                <h4>- Familia Mendoza, Amarilis</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER EXPANDIDO Y PAGO SEGURO -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h2 class="logo-text-footer">Huánuco<span>Fest</span></h2>
+                <p class="slogan">Conecta, Organiza, Confía.</p>
+                <p>El marketplace de eventos más seguro de la región.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                    <li><a href="#">Política de Reembolsos</a></li>
+                    <li><a href="#">Soporte y Ayuda</a></li>
+                    <li><a href="#">Trabaja con nosotros</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-security">
+                <h3>Pago 100% Seguro</h3>
+                <p>Tus transacciones están protegidas. Retenemos el pago hasta que el servicio se cumpla.</p>
+                <div class="payment-methods">
+                    <span class="pay-badge yape">Yape</span>
+                    <span class="pay-badge plin">Plin</span>
+                    <span class="pay-badge visa">Visa</span>
+                    <span class="pay-badge mc">MasterCard</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 HuánucoFest. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+<script>
+    const advisorPhone = '51916388891';
+    const openQuoteBtn = document.getElementById('openQuoteBtn');
+    const quotePanel = document.getElementById('quotePanel');
+    const quoteForm = document.getElementById('quoteForm');
+    const quoteMessage = document.getElementById('quoteMessage');
+
+    if (openQuoteBtn && quotePanel) {
+        openQuoteBtn.addEventListener('click', () => {
+            quotePanel.hidden = !quotePanel.hidden;
+            if (!quotePanel.hidden) {
+                quotePanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+
+    const openProviderBtn = document.getElementById('openProviderBtn');
+    const providerPanel = document.getElementById('providerPanel');
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.getElementById('searchButton');
+    const searchResults = document.getElementById('searchResults');
+    const searchSummary = document.getElementById('searchSummary');
+    const searchList = document.getElementById('searchList');
+    const providerResultsSection = document.getElementById('providerResults');
+    const providerResultsTitle = document.getElementById('providerResultsTitle');
+    const providerList = document.getElementById('providerList');
+
+    const providers = {
+        Catering: [
+            { name: 'Sazón Huanuqueña', description: 'Buffet tradicional y moderno con ingredientes locales.', contact: '999111222' },
+            { name: 'Eventos Sabrosos', description: 'Menús personalizados para bodas y reuniones.', contact: '999222333' },
+            { name: 'Chef Huánuco', description: 'Catering gourmet para 50 a 300 invitados.', contact: '999333444' },
+            { name: 'Buen Sabor Catering', description: 'Almuerzos, cenas y bocaditos fríos.', contact: '999444555' },
+            { name: 'Platillos Fest', description: 'Menús temáticos para eventos especiales.', contact: '999555666' }
+        ],
+        Fotografía: [
+            { name: 'FotoFest', description: 'Fotografía y video profesional para eventos.', contact: '933111222' },
+            { name: 'Captura Huánuco', description: 'Fotos y videos emotivos para bodas y fiestas.', contact: '933222333' },
+            { name: 'Lentes Creativos', description: 'Cobertura completa con edición incluida.', contact: '933333444' },
+            { name: 'Memoria Visual', description: 'Reportajes de evento con estilos modernos.', contact: '933444555' },
+            { name: 'VideoLatino', description: 'Filmación y edición de eventos sociales.', contact: '933555666' }
+        ],
+        Bandas: [
+            { name: 'Banda Los Caballeros', description: 'Brass band con repertorio variado.', contact: '977111222' },
+            { name: 'Sonido Andino', description: 'Música tradicional y moderna en vivo.', contact: '977222333' },
+            { name: 'Ritmo Urbano', description: 'Banda de fiesta para eventos y peñas.', contact: '977333444' },
+            { name: 'La Noche Azul', description: 'Grupo con vocalista y energía en escena.', contact: '977444555' },
+            { name: 'Banda 7 Mares', description: 'Shows animados para bodas y aniversarios.', contact: '977555666' }
+        ],
+        DJ: [
+            { name: 'DJ Hype', description: 'Música electrónica, pop y cumbia.', contact: '966111222' },
+            { name: 'DJ Fiesta Total', description: 'Sonido e iluminación para todo tipo de evento.', contact: '966222333' },
+            { name: 'DJ Mix Pro', description: 'Sets personalizados para bodas y fiestas.', contact: '966333444' },
+            { name: 'Dj Ritmo', description: 'Experiencia en eventos corporativos y sociales.', contact: '966444555' },
+            { name: 'Dj Estelar', description: 'Animación y mezclas para público joven.', contact: '966555666' }
+        ],
+        Locales: [
+            { name: 'Salón Aurora', description: 'Espacio para 200 personas con iluminación LED.', contact: '955111222' },
+            { name: 'Centro de Convenciones', description: 'Salón grande con pista y estacionamiento.', contact: '955222333' },
+            { name: 'Jardín Las Palmas', description: 'Local al aire libre con carpas y áreas verdes.', contact: '955333444' },
+            { name: 'Salón Vista Real', description: 'Ambiente elegante para eventos familiares.', contact: '955444555' },
+            { name: 'Espacio Golden', description: 'Salón con cocina y servicio de catering opcional.', contact: '955555666' }
+        ],
+        Decoración: [
+            { name: 'Deco y Más', description: 'Decoración temática y floral exclusiva.', contact: '944111222' },
+            { name: 'Arte en Eventos', description: 'Escenografías personalizadas y detalles únicos.', contact: '944222333' },
+            { name: 'Ambiente Festivo', description: 'Arreglos florales y decoraciones completas.', contact: '944333444' },
+            { name: 'Eventos Creativos', description: 'Diseños modernos y clásicos según tu estilo.', contact: '944444555' },
+            { name: 'Luces y Flores', description: 'Decoración e iluminación para bodas y fiestas.', contact: '944555666' }
+        ]
+    };
+
+    const allProviders = Object.entries(providers).flatMap(([category, list]) =>
+        list.map((provider) => ({ ...provider, category }))
+    );
+
+    if (openProviderBtn && providerPanel) {
+        openProviderBtn.addEventListener('click', () => {
+            providerPanel.hidden = !providerPanel.hidden;
+            if (!providerPanel.hidden) {
+                providerPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+
+    if (searchButton && searchInput) {
+        const renderSearchResults = (term) => {
+            const query = term.trim().toLowerCase();
+            if (!query) {
+                searchResults.hidden = true;
+                return;
+            }
+            const matched = allProviders.filter((provider) =>
+                provider.name.toLowerCase().includes(query) ||
+                provider.description.toLowerCase().includes(query) ||
+                provider.category.toLowerCase().includes(query)
+            );
+            searchSummary.textContent = matched.length ? `Se encontraron ${matched.length} proveedores para "${term}".` : `No se encontraron proveedores para "${term}".`;
+            searchList.innerHTML = matched.length ? matched.map((provider) => `
+                <div class="search-card">
+                    <strong>${provider.name} (${provider.category})</strong>
+                    <p>${provider.description}</p>
+                    <p>Contacto: ${provider.contact}</p>
+                </div>
+            `).join('') : '<p class="no-results">Prueba otro término como Catering, DJ o Fotografía.</p>';
+            searchResults.hidden = false;
+            searchResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
+        searchButton.addEventListener('click', () => renderSearchResults(searchInput.value));
+        searchInput.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                renderSearchResults(searchInput.value);
+            }
+        });
+    }
+
+    const renderProviderResults = (category) => {
+        const list = providers[category] || [];
+        providerResultsTitle.textContent = `Proveedores para ${category}`;
+        providerList.innerHTML = list.map((provider) => `
+            <div class="provider-card">
+                <h4>${provider.name}</h4>
+                <p>${provider.description}</p>
+                <p><strong>Contacto:</strong> ${provider.contact}</p>
+            </div>
+        `).join('');
+        providerResultsSection.hidden = false;
+        providerResultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    document.querySelectorAll('.provider-btn').forEach((button) => {
+        button.addEventListener('click', () => {
+            renderProviderResults(button.dataset.category);
+        });
+    });
+
+    if (quoteForm && quoteMessage) {
+        quoteForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(quoteForm);
+            const eventType = formData.get('eventType') || 'No especificado';
+            const guests = formData.get('guests') || 'No especificado';
+            const date = formData.get('date') || 'No especificado';
+            const budget = formData.get('budget') || 'No especificado';
+            const services = formData.getAll('services').join(', ') || 'No especificado';
+            const details = formData.get('details') || 'No especificado';
+
+            const message = `Hola, quiero cotizar un evento.%0A%0ATipo: ${encodeURIComponent(eventType)}%0APersonas: ${encodeURIComponent(guests)}%0AFecha: ${encodeURIComponent(date)}%0APresupuesto: ${encodeURIComponent(budget)}%0AServicios: ${encodeURIComponent(services)}%0ADetalles: ${encodeURIComponent(details)}`;
+            const whatsappUrl = `https://wa.me/${advisorPhone}?text=${message}`;
+
+            window.open(whatsappUrl, '_blank');
+            quoteMessage.textContent = 'Se abrió tu chat de WhatsApp con el asesor.';
+            quoteForm.reset();
+        });
+    }
+
+    const providerForm = document.getElementById('providerForm');
+    const providerMessage = document.getElementById('providerMessage');
+    if (providerForm && providerMessage) {
+        providerForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            providerMessage.textContent = 'Solicitud enviada. Nuestro equipo revisará tu registro y te contactará pronto.';
+            providerForm.reset();
+        });
+    }
+</script>
+</body>
+</html>
